@@ -26,9 +26,9 @@ bool mg_bvalve_init(mgos_bvalve_t valve, enum mgos_bvalve_type valve_type,
     bool is_no = ((valve_type & MGOS_BVALVE_TYPE_NO) == MGOS_BVALVE_TYPE_NO);
     bool is_nc = ((valve_type & MGOS_BVALVE_TYPE_NC) == MGOS_BVALVE_TYPE_NC);
     if (is_no && is_nc) {
-      LOG(LL_ERROR, ("Invalid 'valve_type': 'NO' and 'NC' cannot both be active at the same time.", valve_type));
+      LOG(LL_ERROR, ("Invalid 'valve_type': 'NO' and 'NC' cannot both be active at the same time."));
     } else if (!is_no && !is_nc) {
-      LOG(LL_ERROR, ("Invalid 'valve_type': 'NO' or 'NC' must be set.", valve_type));
+      LOG(LL_ERROR, ("Invalid 'valve_type': 'NO' or 'NC' must be set."));
     } else {
       is_type_ok = true;
     }
