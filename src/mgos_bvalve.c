@@ -54,8 +54,8 @@ enum mgos_bvalve_type mgos_bvalve_get_type(mgos_bvalve_t valve) {
 
 enum mgos_bvalve_state mgos_bvalve_get_state(mgos_bvalve_t valve) {
   mgos_bvarc_t state = mgos_bthing_get_state(MGOS_BVALVE_THINGCAST(valve));
-  if (mgos_bvar_get_type(valve) == MGOS_BVAR_TYPE_INTEGER) {
-    return (enum mgos_bvalve_state)mgos_bvar_get_integer(valve);
+  if (mgos_bvar_get_type(state) == MGOS_BVAR_TYPE_INTEGER) {
+    return (enum mgos_bvalve_state)mgos_bvar_get_integer(state);
   }
   return (enum mgos_bvalve_state)-1;
 }
