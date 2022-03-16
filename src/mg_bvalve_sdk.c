@@ -1,4 +1,5 @@
 #include "mgos.h"
+#include "mg_bthing_sdk.h"
 #include "mg_bvalve_sdk.h"
 
 
