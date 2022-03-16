@@ -44,6 +44,14 @@ bool mg_bvalve_init(mgos_bvalve_t valve, enum mgos_bvalve_type valve_type,
         valve_cfg->valve_type = valve_type;
         /* initalize overrides cfg */
         valve_cfg->overrides.setting_state_cb = NULL;
+
+        // set initial state
+        enum mgos_bvalve_state initial_state = MGOS_BVALVE_STATE_UNKNOWN;
+        if ((valve_type & MGOS_BVALVE_TYPE_NO) == MGOS_BVALVE_TYPE_NO)
+          initial_state = MGOS_BVALVE_STATE_OPEN;
+        else if ((valve_type & MGOS_BVALVE_TYPE_NC) == MGOS_BVALVE_TYPE_NC)
+          initial_state = MGOS_BVALVE_STATE_CLOSED;
+        mgos_bvar_set_integer(mg_bthing_get_state_4update(MGOS_BVALVE_THINGCAST(valve)), initial_state);
       
         return true; // initialization successfully completed
       }
