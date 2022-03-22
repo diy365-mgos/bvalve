@@ -23,9 +23,9 @@ bValve types.
 |--|--|
 |MGOS_BVALVE_TYPE_NO|Normally open valve.|
 |MGOS_BVALVE_TYPE_NC|Normally closed valve.|
-|MGOS_BVALVE_TYPE_SOLENOID|Solenoid valve. This can be used in combination with `MGOS_BVALVE_TYPE_NO` or with `MGOS_BVALVE_TYPE_NC`.|
-|MGOS_BVALVE_TYPE_BISTABLE|Bistable valve.|
-|MGOS_BVALVE_TYPE_MOTORIZED|Motorized valve. This can be used in combination with `MGOS_BVALVE_TYPE_NO` or with `MGOS_BVALVE_TYPE_NC`.|
+|MGOS_BVALVE_TYPE_SOLENOID|Solenoid valve. This must be used in combination with `MGOS_BVALVE_TYPE_NO` or with `MGOS_BVALVE_TYPE_NC`.|
+|MGOS_BVALVE_TYPE_BISTABLE|Bistable valve. Optionally, this can be used in combination with `MGOS_BVALVE_TYPE_NO` or with `MGOS_BVALVE_TYPE_NC`.|
+|MGOS_BVALVE_TYPE_MOTORIZED|Motorized valve. This must be used in combination with `MGOS_BVALVE_TYPE_NO` or with `MGOS_BVALVE_TYPE_NC`.|
 ```c
 // Example: normally open solenoid valve
 enum mgos_bvalve_type type1 = (MGOS_BVALVE_TYPE_SOLENOID | MGOS_BVALVE_TYPE_NO);

@@ -22,19 +22,22 @@ bool mg_bvalve_init(mgos_bvalve_t valve, enum mgos_bvalve_type valve_type,
                     struct mg_bvalve_cfg *valve_cfg,
                     struct mg_bsensor_cfg *sens_cfg) {
   bool is_type_ok = false;
-  if (((valve_type & MGOS_BVALVE_TYPE_SOLENOID) == MGOS_BVALVE_TYPE_SOLENOID) ||
-      ((valve_type & MGOS_BVALVE_TYPE_MOTORIZED) == MGOS_BVALVE_TYPE_MOTORIZED)) {
-    bool is_no = ((valve_type & MGOS_BVALVE_TYPE_NO) == MGOS_BVALVE_TYPE_NO);
-    bool is_nc = ((valve_type & MGOS_BVALVE_TYPE_NC) == MGOS_BVALVE_TYPE_NC);
-    if (is_no && is_nc) {
-      LOG(LL_ERROR, ("Invalid 'valve_type': 'NO' and 'NC' cannot both be active at the same time."));
-    } else if (!is_no && !is_nc) {
+  if (((valve_type & MGOS_BVALVE_TYPE_NO) == MGOS_BVALVE_TYPE_NO) &&
+      ((valve_type & MGOS_BVALVE_TYPE_NC) == MGOS_BVALVE_TYPE_NC)) {
+    // ERROR: the valve is set as both NO and NC 
+    LOG(LL_ERROR, ("Invalid 'valve_type': 'NO' and 'NC' cannot both be set at the same time."));
+  } else if ((valve_type & MGOS_BVALVE_TYPE_BISTABLE) == MGOS_BVALVE_TYPE_BISTABLE) {
+    // Bistable valve: NO and NC flags are optional
+    is_type_ok = true;
+  } else {
+    // Solenoid or motorized valve...
+    if (((valve_type & MGOS_BVALVE_TYPE_NO) != MGOS_BVALVE_TYPE_NO) &&
+        ((valve_type & MGOS_BVALVE_TYPE_NC) != MGOS_BVALVE_TYPE_NC)) {
+      // NO and NC flags are mandatory for solenoid and motorized valves
       LOG(LL_ERROR, ("Invalid 'valve_type': 'NO' or 'NC' must be set."));
     } else {
       is_type_ok = true;
     }
-  } else if ((valve_type & MGOS_BVALVE_TYPE_BISTABLE) == MGOS_BVALVE_TYPE_BISTABLE) {
-    is_type_ok = true;
   }
 
   if (is_type_ok) {
