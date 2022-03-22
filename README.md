@@ -52,8 +52,18 @@ Creates a bValve. Returns `NULL` on error.
 |Parameter||
 |--|--|
 |id|The bValve ID.|
-|valve_type|The [valve type](#mgos_bvalve_type).|
+|valve_type|The valve [type](#mgos_bvalve_type).|
 |domain|The domain name or `NULL`.|
+
+Examples:
+```c
+// Create a bistable valve
+mgos_bvalve_t v1 = mgos_bvalve_create("v1", MGOS_BVALVE_TYPE_BISTABLE, NULL);
+// Create a solenoid NC (normally closed() valve
+mgos_bvalve_t v2 = mgos_bvalve_create("v2", MGOS_BVALVE_TYPE_SOLENOID | MGOS_BVALVE_TYPE_NC, NULL);
+// Create a motorized NO (normally open) valve
+mgos_bvalve_t v3 = mgos_bvalve_create("v3", MGOS_BVALVE_TYPE_MOTORIZED | MGOS_BVALVE_TYPE_NO, NULL);
+```
 ### mgos_bvalve_get_type
 ```c
 enum mgos_bvalve_type mgos_bvalve_get_type(mgos_bvalve_t valve);
