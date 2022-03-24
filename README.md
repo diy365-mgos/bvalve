@@ -76,6 +76,39 @@ I'm a bThing actuator.
 I'm a bSensor.
 I'm a bThing sensor.
 ```
+### MGOS_BVALVE_THINGCAST
+```c
+mgos_bthing_t MGOS_BVALVE_THINGCAST(mgos_bvalve_t valve);
+```
+Casts a bValve to a generic bThing to be used with [inherited bThing APIs](https://github.com/diy365-mgos/bthing).
+
+|Parameter||
+|--|--|
+|valve|A bValve.|
+
+Example:
+```c
+mgos_bvalve_t valve = mgos_bvalve_create(...);
+LOG(LL_INFO, ("%s successfully created.", mgos_bthing_get_uid(MGOS_BVALVE_THINGCAST(valve))));
+```
+### MGOS_BVALVE_SENSCAST
+```c
+mgos_bsensor_t MGOS_BVALVE_SENSCAST(mgos_bvalve_t valve);
+```
+Casts a bValve to a bSensor to be used with [inherited bSensor APIs](https://github.com/diy365-mgos/bsensor).
+
+|Parameter||
+|--|--|
+|valve|A bValve.|
+### MGOS_BVALVE_DOWNCAST
+```c
+mgos_bactuator_t MGOS_BVALVE_DOWNCAST(mgos_bvalve_t valve);
+```
+Casts a bValve to a bActuator to be used with [inherited bActuator APIs](https://github.com/diy365-mgos/bactuator).
+
+|Parameter||
+|--|--|
+|valve|A bValve.|
 ### mgos_bvalve_type
 ```c
 enum mgos_bvalve_type {
@@ -161,38 +194,5 @@ Closes or opens a bValve.
 |--|--|
 |valve|A bValve.|
 |state|The [state](#mgos_bvalve_state) to set. Only `MGOS_BVALVE_STATE_OPEN` and `MGOS_BVALVE_STATE_CLOSED` values are allowed.|
-### MGOS_BVALVE_THINGCAST
-```c
-mgos_bthing_t MGOS_BVALVE_THINGCAST(mgos_bvalve_t valve);
-```
-Casts a bValve to a generic bThing to be used with [inherited bThing APIs](https://github.com/diy365-mgos/bthing).
-
-|Parameter||
-|--|--|
-|valve|A bValve.|
-
-Example:
-```c
-mgos_bvalve_t valve = mgos_bvalve_create(...);
-LOG(LL_INFO, ("%s successfully created.", mgos_bthing_get_uid(MGOS_BVALVE_THINGCAST(valve))));
-```
-### MGOS_BVALVE_SENSCAST
-```c
-mgos_bsensor_t MGOS_BVALVE_SENSCAST(mgos_bvalve_t valve);
-```
-Casts a bValve to a bSensor to be used with [inherited bSensor APIs](https://github.com/diy365-mgos/bsensor).
-
-|Parameter||
-|--|--|
-|valve|A bValve.|
-### MGOS_BVALVE_DOWNCAST
-```c
-mgos_bactuator_t MGOS_BVALVE_DOWNCAST(mgos_bvalve_t valve);
-```
-Casts a bValve to a bActuator to be used with [inherited bActuator APIs](https://github.com/diy365-mgos/bactuator).
-
-|Parameter||
-|--|--|
-|valve|A bValve.|
 ## To Do
 - Implement javascript APIs for [Mongoose OS MJS](https://github.com/mongoose-os-libs/mjs).
