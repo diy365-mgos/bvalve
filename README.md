@@ -48,6 +48,34 @@ mgos_bthing_set_state(MGOS_BVALVE_THINGCAST(valve), MGOS_BVAR_CONST(state));
 mgos_bvar_free(state);
 ```
 ## C/C++ APIs Reference
+### MGOS_BVALVE_TYPE
+```c
+#define MGOS_BVALVE_TYPE 
+```
+The bValve type ID. It can be used with [mgos_bthing_is_typeof()](https://github.com/diy365-mgos/bthing#mgos_bthing_is_typeof).
+
+Example:
+```c
+mgos_bvalve_t valve = mgos_bvalve_create(...);
+if (mgos_bthing_is_typeof(MGOS_BVALVE_THINGCAST(valve), MGOS_BVALVE_TYPE))
+  LOG(LL_INFO, ("I'm a bValve."));
+if (mgos_bthing_is_typeof(MGOS_BVALVE_THINGCAST(valve), MGOS_BACTUATOR_TYPE))
+  LOG(LL_INFO, ("I'm a bActuator."));
+if (mgos_bthing_is_typeof(MGOS_BVALVE_THINGCAST(valve), MGOS_BTHING_TYPE_ACTUATOR))
+  LOG(LL_INFO, ("I'm a bThing actuator."));
+if (mgos_bthing_is_typeof(MGOS_BVALVE_THINGCAST(valve), MGOS_BSENSOR_TYPE))
+  LOG(LL_INFO, ("I'm a bSensor."));
+if (mgos_bthing_is_typeof(MGOS_BVALVE_THINGCAST(valve), MGOS_BTHING_TYPE_SENSOR))
+  LOG(LL_INFO, ("I'm a bThing sensor."));
+```
+Output console:
+```bash
+I'm a bValve.
+I'm a bActuator.
+I'm a bThing actuator.
+I'm a bSensor.
+I'm a bThing sensor.
+```
 ### mgos_bvalve_type
 ```c
 enum mgos_bvalve_type {
