@@ -9,7 +9,7 @@ A bValve inherits inherits APIs from:
 ### Remarks on mgos_bthing_on_get_state()
 The [get-state handler](https://github.com/diy365-mgos/bthing#mgos_bthing_get_state_handler_t) must set the `state` parameter to one of the [enum mgos_bvalve_state](#mgos_bvalve_state) values.
 ```c
-bool my_get_state_handler(mgos_bthing_t thing, mgos_bvar_t state, void *userdata) {
+static bool my_get_state_handler(mgos_bthing_t thing, mgos_bvar_t state, void *userdata) {
   enum mgos_bvalve_state valve_state = MGOS_BVALVE_STATE_OPENING; // or any other allowed enum value
   mgos_bvar_set_integer(state, valve_state):
   return true;
@@ -20,7 +20,7 @@ mgos_bthing_on_get_state(MGOS_BVALVE_THINGCAST(valve), my_get_state_handler, NUL
 ### Remarks on mgos_bthing_on_set_state()
 The `state` parameter value in the [set-state handler](https://github.com/diy365-mgos/bthing#mgos_bthing_set_state_handler_t) is a [enum mgos_bvalve_state](#mgos_bvalve_state) value and it can be `MGOS_BVALVE_STATE_OPEN` or `MGOS_BVALVE_STATE_CLOSED`.
 ```c
-bool my_set_state_handler(mgos_bthing_t thing, mgos_bvarc_t state, void *userdata) {
+static bool my_set_state_handler(mgos_bthing_t thing, mgos_bvarc_t state, void *userdata) {
   enum mgos_bvalve_state state_to_set = (enum mgos_bvalve_state)mgos_bvar_get_integer(state)
   if (state_to_set == MGOS_BVALVE_STATE_OPEN)
     // open the valve
