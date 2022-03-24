@@ -40,7 +40,7 @@ mgos_bvarc_t state = mgos_bthing_get_state(MGOS_BVALVE_THINGCAST(valve));
 enum mgos_bvalve_state valve_state = (enum mgos_bvalve_state)mgos_bvar_get_integer(state);
 ```
 ### Remarks on mgos_bthing_set_state()
-The [mgos_bthing_set_state()](https://github.com/diy365-mgos/bthing#mgos_bthing_set_state) allows boolean values as input parameter. Alternatively you can use the [mgos_bvalve_set_state()](#mgos_bvalve_set_state) hepler function.
+The [mgos_bthing_set_state()](https://github.com/diy365-mgos/bthing#mgos_bthing_set_state) allows allows one of the following [enum mgos_bvalve_state](#mgos_bvalve_state) values as input parameter: `MGOS_BVALVE_STATE_OPEN` or `MGOS_BVALVE_STATE_CLOSED`. No other values are allowed. Alternatively you can use the [mgos_bvalve_set_state()](#mgos_bvalve_set_state) hepler function.
 ```c
 mgos_bvalve_t valve = mgos_bvalve_create(...);
 mgos_bvar_t state = mgos_bvar_new_integer(MGOS_BVALVE_STATE_CLOSED);
