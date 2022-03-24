@@ -1,12 +1,39 @@
 # bValves Library
 ## Overview
 A bValve allows you to easily manage valves. You can find some [examples here](https://github.com/diy365-mgos/bvalve-gpio#get-started) on how to use bValves to control valves.
-## C/C++ APIs Reference
-### Inherited APIs
+## Inherited APIs
 A bValve inherits inherits APIs from:
 - [bThing](https://github.com/diy365-mgos/bthing)
 - [bSensor](https://github.com/diy365-mgos/bsensor)
 - [bActuator](https://github.com/diy365-mgos/bactuator)
+### Remarks on mgos_bthing_on_get_state()
+The *get-state* handler (see inherited [mgos_bthing_on_get_state()](https://github.com/diy365-mgos/bthing#mgos_bthing_on_get_state) function) must set the `state` parameter to one of the allowed `enum mgos_bvalve_state` values.
+```c
+bool my_get_state_handler(mgos_bthing_t thing, mgos_bvar_t state, void *userdata) {
+  enum mgos_bvalve_state valve_state = MGOS_BVALVE_STATE_OPENING; // or any other allowed enum value
+  mgos_bvar_set_integer(state, valve_state):
+  return true;
+}
+mgos_bvalve_t valve = mgos_bvalve_create("v01", MGOS_BVALVE_TYPE_SOLENOID|MGOS_BVALVE_TYPE_NC, NULL);
+mgos_bthing_on_get_state(MGOS_BVALVE_THINGCAST(valve), my_get_state_handler, NULL);
+```
+### Remarks on mgos_bthing_on_set_state()
+The `state` parameter of the *set-state* handler (see inherited [mgos_bthing_on_set_state()](https://github.com/diy365-mgos/bthing#mgos_bthing_on_set_state) function) is an integer value and it can be `MGOS_BVALVE_STATE_OPEN` or `MGOS_BVALVE_STATE_CLOSED`.
+```c
+bool my_set_state_handler(mgos_bthing_t thing, mgos_bvarc_t state, void *userdata) {
+  enum mgos_bvalve_state state_to_set = (enum mgos_bvalve_state)mgos_bvar_get_integer(state)
+  if (state_to_set == MGOS_BVALVE_STATE_OPEN)
+    // open the valve
+  else if (state_to_set == MGOS_BVALVE_STATE_CLOSED)
+    // close the valve
+  else
+    return false; // invalid requested state
+  return true;
+}
+mgos_bvalve_t valve = mgos_bvalve_create("v01", MGOS_BVALVE_TYPE_SOLENOID|MGOS_BVALVE_TYPE_NC, NULL);
+mgos_bthing_on_set_state(MGOS_BVALVE_THINGCAST(valve), my_set_state_handler, NULL);
+```
+## C/C++ APIs Reference
 ### mgos_bvalve_type
 ```c
 enum mgos_bvalve_type {
@@ -32,17 +59,6 @@ enum mgos_bvalve_type type1 = (MGOS_BVALVE_TYPE_SOLENOID | MGOS_BVALVE_TYPE_NO);
 // Example: normally open motorized valve
 enum mgos_bvalve_type type2 = (MGOS_BVALVE_TYPE_MOTORIZED | MGOS_BVALVE_TYPE_NO);
 ```
-### mgos_bvalve_state
-```c
-enum mgos_bvalve_state {
-  MGOS_BVALVE_STATE_CLOSED = 0,
-  MGOS_BVALVE_STATE_OPEN = 1,
-  MGOS_BVALVE_STATE_OPENING = 2,
-  MGOS_BVALVE_STATE_CLOSING = 3,
-  MGOS_BVALVE_STATE_UNKNOWN = 4,
-};
-```
-bValve states.
 ### mgos_bvalve_create
 ```c
 mgos_bvalve_t mgos_bvalve_create(const char *id, enum mgos_bvalve_type valve_type, const char *domain);
@@ -73,6 +89,17 @@ Gest the bValve's [type](#mgos_bvalve_type).
 |Parameter||
 |--|--|
 |valve|A bValve.|
+### mgos_bvalve_state
+```c
+enum mgos_bvalve_state {
+  MGOS_BVALVE_STATE_CLOSED = 0,
+  MGOS_BVALVE_STATE_OPEN = 1,
+  MGOS_BVALVE_STATE_OPENING = 2,
+  MGOS_BVALVE_STATE_CLOSING = 3,
+  MGOS_BVALVE_STATE_UNKNOWN = 4,
+};
+```
+bValve states.
 ### mgos_bvalve_get_state
 ```c
 enum mgos_bvalve_state mgos_bvalve_get_state(mgos_bvalve_t valve);
