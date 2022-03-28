@@ -1,6 +1,8 @@
 # bValves Library
 ## Overview
-A bValve allows you to easily manage valves. You can find some [examples here](https://github.com/diy365-mgos/bvalve-gpio#get-started) on how to use bValves to control valves.
+A bValve allows you to easily manage valves.
+## GET STARTED
+You can find some [examples here](https://github.com/diy365-mgos/bvalve-gpio#get-started) on how to use bValves to control valves.
 ## Inherited APIs
 A bValve inherits inherits APIs from:
 - [bThing](https://github.com/diy365-mgos/bthing)
