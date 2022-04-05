@@ -55,7 +55,11 @@ bool mg_bvalve_init(mgos_bvalve_t valve, enum mgos_bvalve_type valve_type,
           initial_state = MGOS_BVALVE_STATE_OPEN;
         else if ((valve_type & MGOS_BVALVE_TYPE_NC) == MGOS_BVALVE_TYPE_NC)
           initial_state = MGOS_BVALVE_STATE_CLOSED;
-        mgos_bvar_set_integer(mg_bthing_get_state_4update(MGOS_BVALVE_THINGCAST(valve)), initial_state);
+        struct mgos_bthing_updatable_state state;
+        if (mgos_bthing_start_update_state(MGOS_BVALVE_THINGCAST(valve), &state)) {
+          mgos_bvar_set_integer(state.value, initial_state);
+          mgos_bthing_end_update_state(state);
+        }
       
         return true; // initialization successfully completed
       }
